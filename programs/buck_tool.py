@@ -232,21 +232,25 @@ class BuckTool(object):
                 else:
                     raise e
 
-            process = subprocess.Popen(
-                command,
-                executable=which("java"),
-                cwd=self._buck_project.root,
-                close_fds=True,
-                preexec_fn=preexec_func,
-                env=self._environ_for_buck())
+            args = {'executable': which("java"),
+                    'cwd': self._buck_project.root,
+                    'close_fds': True,
+                    'env': self._environ_for_buck()}
+
+            if platform.system() != 'Windows':
+                # preexec_fn is not supported on Windows
+                args['preexec_fn'] = preexec_func
+
+            process = subprocess.Popen(command, **args)
 
             self._buck_project.save_buckd_version(buck_version_uid)
             self._buck_project.update_buckd_run_count(0)
 
             # Give Java some time to create the listening socket.
-            for i in range(0, 100):
-                if not os.path.exists(buck_socket_path):
-                    time.sleep(0.01)
+            if platform.system() != 'windows':
+                for i in range(0, 100):
+                    if not os.path.exists(buck_socket_path):
+                        time.sleep(0.01)
 
             returncode = process.poll()
 

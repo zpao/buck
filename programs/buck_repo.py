@@ -98,6 +98,9 @@ RESOURCES = {
     "testrunner_classes": "build/testrunner/classes",
 }
 
+# yuk
+if platform.system() == 'Windows':
+    RESOURCES['buck_client'] = 'third-party/nailgun/ng.exe'
 
 def get_ant_env(max_heap_size_mb):
     ant_env = os.environ.copy()
