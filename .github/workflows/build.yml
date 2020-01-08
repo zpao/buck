@@ -40,6 +40,8 @@ jobs:
         name: Install Pyenv
         run: curl https://pyenv.run | bash
 
+      - run: pyenv install -s 3.6.2
+
       -
         name: Build
         env:
