@@ -43,5 +43,6 @@ jobs:
       -
         name: Build
         env:
+          PATH: /home/runner/.pyenv/bin:$PATH
           CI_ACTION: build
         run: ./scripts/travisci_run.sh
