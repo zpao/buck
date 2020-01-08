@@ -38,7 +38,12 @@ jobs:
         run: python -c "import sys; print(sys.version)"
       -
         name: Install Pyenv
-        run: curl https://pyenv.run | bash
+        run: |
+          curl https://pyenv.run | bash
+          export PATH="/home/runner/.pyenv/bin:$PATH"
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+
 
       - run: pyenv install -s 3.6.2
 
