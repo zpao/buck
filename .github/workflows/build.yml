@@ -7,6 +7,7 @@ jobs:
   linux-build:
     strategy:
       matrix:
+        fail-fast: false
         os:
           - ubuntu-16.04
           # - ubuntu-18.04
@@ -14,7 +15,7 @@ jobs:
           - 8
         python-version:
           - 3.6
-          - 2.7
+          # - 2.7
     runs-on: ${{ matrix.os }}
 
     steps:
@@ -35,6 +36,9 @@ jobs:
       -
         name: Display Python version
         run: python -c "import sys; print(sys.version)"
+      -
+        name: Install Pyenv
+        run: curl https://pyenv.run | bash
 
       -
         name: Build
