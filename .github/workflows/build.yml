@@ -45,4 +45,7 @@ jobs:
         env:
           PATH: /home/runner/.pyenv/bin:$PATH
           CI_ACTION: build
-        run: ./scripts/travisci_run.sh
+        run: |
+          eval "$(pyenv init -)"
+          eval "$(pyenv virtualenv-init -)"
+          ./scripts/travisci_run.sh
